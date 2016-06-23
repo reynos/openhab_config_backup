@@ -2,7 +2,7 @@
 /* Active Swtiches */
 //Group:Switch:OR(ON, OFF) 		Lights 
 Group:Switch:OR(ON, OFF) 		AllLights 	"Lights on: [(%d)]"
-Group:Switch:OR(ON, OFF)		gPeanut		"Night Lights for Peanuut[(%d)]" <light>
+//Group:Switch:OR(ON, OFF)		gPeanut		"Night Lights for Peanut[(%d)]" <light>
 
 Group All
 Group gGF			(All)
@@ -47,7 +47,7 @@ Dimmer Light_GF_Kitchen_High 		"High [%d %%]" 			<slider>		(GF_Kitchen, Lights)	
 Number Light_GF_Kitchen_High_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="12:command=METER,meter_scale=E_W" }
 Dimmer Light_GF_Kitchen_Low 		"Low [%d %%]" 			<slider>		(GF_Kitchen, Lights)						{ zwave="13:command=SWITCH_MULTILEVEL" }
 Number Light_GF_Kitchen_Low_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="13:command=METER,meter_scale=E_W" }
-Switch Light_GF_Kitchen_Bench 		"Bench" 								(GF_Kitchen, Lights, Evening, gPeanut)		{ zwave="8:command=SWITCH_BINARY" }
+Switch Light_GF_Kitchen_Bench 		"Bench" 								(GF_Kitchen, Lights, Evening, Peanut)		{ zwave="8:command=SWITCH_BINARY" }
 Number Light_GF_Kitchen_Bench_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="8:command=METER,meter_scale=E_W" }
 Switch Light_GF_Relay1		 		"Relay 1" 								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/one:command:ON:1],>[mymosquitto:/relays/one:command:OFF:0]"}
 Switch Light_GF_Relay2		 		"Relay 2"								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/two:command:ON:1],>[mymosquitto:/relays/two:command:OFF:0]"}
@@ -57,7 +57,7 @@ Switch Light_GF_Relay4		 		"Relay 4"								(GF_Kitchen, Lights)						{ mqtt=">[
 
 Dimmer Light_FF_BedMaster_Ceiling 	"Ceiling [%d %%]"		<slider>		(FF_BedMaster, AllLights)					{ zwave="18:command=SWITCH_MULTILEVEL" }
 Number Light_FF_BedMaster_Ceiling_W	"Energy Usage: [%.1fW]" <energy>		(FF_BedMaster)								{ zwave="18:command=METER,meter_scale=E_W" }
-Switch Light_FF_Hall_Stairs	 		"Stairs"								(FF_Hall, AllLights, Evening, gPeanut)		{ zwave="11:command=SWITCH_BINARY" }
+Switch Light_FF_Hall_Stairs	 		"Stairs"								(FF_Hall, AllLights, Evening, Peanut)		{ zwave="11:command=SWITCH_BINARY" }
 Number Light_FF_Hall_Stairs_W		"Energy Usage: [%.1fW]" <energy>		(FF_Hall)									{ zwave="11:command=METER,meter_scale=E_W" }
 Switch Light_Outdoor_Front_Porch 	"Front Porch"							(Outdoor, Lights)							{ zwave="17:command=SWITCH_BINARY" }
 Number Light_Outdoor_Front_Porch_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="17:command=METER,meter_scale=E_W" }
@@ -65,7 +65,7 @@ Switch Light_Outdoor_Frontyard 		"Front Garden Lights" 					(Outdoor, AllLights,
 Number Light_Outdoor_Frontyard_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="5:command=METER,meter_scale=E_W" }
 Switch Light_Outdoor_Christmas 		"Christmas lights" 		<christmas>		(Outdoor, Lights)							{ zwave="19:command=SWITCH_BINARY" }
 Number Light_Outdoor_Christmas_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="19:command=METER,meter_scale=E_W" }
-Switch Light_Outdoor_Backyard 		"Back Garden"							(Outdoor, Lights, Evening, gPeanut)			{ zwave="4:command=SWITCH_BINARY" }
+Switch Light_Outdoor_Backyard 		"Back Garden"							(Outdoor, Lights, Evening, Peanut)			{ zwave="4:command=SWITCH_BINARY" }
 Switch Water_Back_Deck				"Water Deck" 							(Outdoor, Watering)							{ mqtt=">[mymosquitto:/water/one:command:ON:1],>[mymosquitto:/water/one:command:OFF:0]"}
 Switch Water2	 					"Water 2"								(Outdoor, Watering)							{ mqtt=">[mymosquitto:/water/two:command:ON:1],>[mymosquitto:/water/two:command:OFF:0]"}
 //Number Light_Outdoor_Backyard_W		"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="4:command=METER,meter_scale=E_W" }

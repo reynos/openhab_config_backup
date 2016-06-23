@@ -169,13 +169,13 @@ end
 
 rule "Peanut Night Lights"
 when
-	Item gPeanut received command
+	Item Peanut received command
 then
 	if(receivedCommand==ON) {
 		if(timer==null) {
 			// first ON command, so create a timer to turn the light off again
 			timer = createTimer(now.plusSeconds(300)) [|
-				sendCommand(gPeanut, OFF)
+				sendCommand(Peanut, OFF)
 			]
 		} else {
 			// subsequent ON command, so reschedule the existing timer
