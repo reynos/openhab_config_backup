@@ -1,0 +1,7 @@
+Switch  PresenceDarren_PhoneMqttHome "Darren @ Home"  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:home" }
+Switch  PresenceDarren_PhoneMqttWork "Darren @ Work"  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:DarrenWork" }
+//Switch  PresenceDarren_PhoneMqttHome   "Darren @ [%s]"   { mqttitude="mymosquitto:owntracks/reynolds/darren/event:home" }
+// IP presence
+// String MOB_Darren "Darren [%s]"  { exec="<[sudo bash /opt/openhab/iphonedetect_darren.sh:60000:REGEX((.*?))]" }
+// String MOB_Blythe "Blythe [%s]" { exec="<[bash /opt/openhab/iphonedetect_blythe.sh:60000:REGEX((.*?))]" }
+ 

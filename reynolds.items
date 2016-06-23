@@ -1,0 +1,171 @@
+//Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
+/* Active Swtiches */
+//Group:Switch:OR(ON, OFF) 		Lights 
+Group:Switch:OR(ON, OFF) 		AllLights 	"Lights on: [(%d)]"
+Group:Switch:OR(ON, OFF)		gPeanut		"Night Lights for Peanuut[(%d)]" <light>
+
+Group All
+Group gGF			(All)
+Group gFF 			(All)
+Group gDashboard
+Group Outdoor 		(All)
+Group gWeather 		(All)
+Group Status 		(All)
+Group Temperature	(All)
+Group Temperature_Web
+Group Music			(All)
+Group Evening
+//Group Bedtime		(Evening)
+Group GF_Living 					"Living Room" 			<television> 	(gGF)
+Group GF_Kitchen 					"Kitchen" 				<kitchen> 		(gGF)
+Group GF_Bedrooms 					"Bedrooms" 				<bedroom> 		(gGF)
+//Group GF_BedFront 					"Front Bedroom" 		<bedroom> 		(gGF)
+//Group GF_BedMiddle					"Middle Bedroom" 		<bedroom> 		(gGF)
+Group FF_BedMaster					"Master Bedroom" 		<bedroom> 		(gFF)
+Group FF_Hall						"Hallway" 				<stairs> 		(gFF)
+Group FF_Study						"Study" 				<sofa>	 		(gFF)
+Group Lights																(AllLights)
+Group Peanut
+
+/* Light Sensor */
+Number GF_Kitchen_Light_level		"Light Reading: [%s]"					(GF_Kitchen)								{ mqtt="<[mymosquitto:/Light/Kitchen:state:default]" }
+
+/* Lights */
+//Dimmer Light_GF_Living_TV 			"TV [%.1fW]" 					<slider>		(GF_Living, Lights)							{ zwave="16:command=SWITCH_MULTILEVEL;METER,meter_scale=E_W" }
+Dimmer Light_GF_Living_TV 			"TV" 					<slider>		(GF_Living, Lights)							{ zwave="16:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Living_TV_W			"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="16:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Living_Lounge 		"Lounge" 								(GF_Living, Lights)							{ zwave="14:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Living_Lounge_W		"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="14:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Living_Lamp 		"Lamp" 					<slider>		(GF_Living, Lights)							{ zwave="7:command=SWITCH_MULTILEVEL" }
+Switch Light_GF_Living_Hall 		"Hall" 									(GF_Living, Lights)							{ zwave="15:command=SWITCH_BINARY" }
+Number Light_GF_Living_Hall_W		"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="15:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Front_Bedroom 		"Front Bedroom" 		<slider>		(GF_Bedrooms, AllLights)					{ zwave="20:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Front_Bedroom_W		"Energy Usage: [%.1fW]" <energy>		(GF_Bedrooms)								{ zwave="20:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Middle_Bedroom 		"Middle Bedroom" 		<slider>		(GF_Bedrooms, AllLights)					{ zwave="2:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Middle_Bedroom_W	"Energy Usage: [%.1fW]" <energy>		(GF_Bedrooms)								{ zwave="2:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Kitchen_High 		"High [%d %%]" 			<slider>		(GF_Kitchen, Lights)						{ zwave="12:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Kitchen_High_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="12:command=METER,meter_scale=E_W" }
+Dimmer Light_GF_Kitchen_Low 		"Low [%d %%]" 			<slider>		(GF_Kitchen, Lights)						{ zwave="13:command=SWITCH_MULTILEVEL" }
+Number Light_GF_Kitchen_Low_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="13:command=METER,meter_scale=E_W" }
+Switch Light_GF_Kitchen_Bench 		"Bench" 								(GF_Kitchen, Lights, Evening, gPeanut)		{ zwave="8:command=SWITCH_BINARY" }
+Number Light_GF_Kitchen_Bench_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="8:command=METER,meter_scale=E_W" }
+Switch Light_GF_Relay1		 		"Relay 1" 								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/one:command:ON:1],>[mymosquitto:/relays/one:command:OFF:0]"}
+Switch Light_GF_Relay2		 		"Relay 2"								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/two:command:ON:1],>[mymosquitto:/relays/two:command:OFF:0]"}
+Switch Light_GF_Relay3		 		"Relay 3"								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/three:command:ON:1],>[mymosquitto:/relays/three:command:OFF:0]"}
+Switch Light_GF_Relay4		 		"Relay 4"								(GF_Kitchen, Lights)						{ mqtt=">[mymosquitto:/relays/four:command:ON:1],>[mymosquitto:/relays/four:command:OFF:0]"}
+
+
+Dimmer Light_FF_BedMaster_Ceiling 	"Ceiling [%d %%]"		<slider>		(FF_BedMaster, AllLights)					{ zwave="18:command=SWITCH_MULTILEVEL" }
+Number Light_FF_BedMaster_Ceiling_W	"Energy Usage: [%.1fW]" <energy>		(FF_BedMaster)								{ zwave="18:command=METER,meter_scale=E_W" }
+Switch Light_FF_Hall_Stairs	 		"Stairs"								(FF_Hall, AllLights, Evening, gPeanut)		{ zwave="11:command=SWITCH_BINARY" }
+Number Light_FF_Hall_Stairs_W		"Energy Usage: [%.1fW]" <energy>		(FF_Hall)									{ zwave="11:command=METER,meter_scale=E_W" }
+Switch Light_Outdoor_Front_Porch 	"Front Porch"							(Outdoor, Lights)							{ zwave="17:command=SWITCH_BINARY" }
+Number Light_Outdoor_Front_Porch_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="17:command=METER,meter_scale=E_W" }
+Switch Light_Outdoor_Frontyard 		"Front Garden Lights" 					(Outdoor, AllLights, Evening)				{ zwave="5:command=SWITCH_BINARY" }
+Number Light_Outdoor_Frontyard_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="5:command=METER,meter_scale=E_W" }
+Switch Light_Outdoor_Christmas 		"Christmas lights" 		<christmas>		(Outdoor, Lights)							{ zwave="19:command=SWITCH_BINARY" }
+Number Light_Outdoor_Christmas_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="19:command=METER,meter_scale=E_W" }
+Switch Light_Outdoor_Backyard 		"Back Garden"							(Outdoor, Lights, Evening, gPeanut)			{ zwave="4:command=SWITCH_BINARY" }
+Switch Water_Back_Deck				"Water Deck" 							(Outdoor, Watering)							{ mqtt=">[mymosquitto:/water/one:command:ON:1],>[mymosquitto:/water/one:command:OFF:0]"}
+Switch Water2	 					"Water 2"								(Outdoor, Watering)							{ mqtt=">[mymosquitto:/water/two:command:ON:1],>[mymosquitto:/water/two:command:OFF:0]"}
+//Number Light_Outdoor_Backyard_W		"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="4:command=METER,meter_scale=E_W" }
+
+/* Music */
+String SonosKitchen_track			"Kitchen: [%s]"  		<sonos5>		(Music)							{ sonos="[Kitchen:currenttrack]", autoupdate="false"}
+Switch SonosKitchen					"Sonos Music" 			<note>			(GF_Kitchen, Music)				{ sonos="[ON:Kitchen:play],[OFF:Kitchen:stop]" }
+String SonosKitchen_Radio																					{ sonos="[ON:Kitchen:radio]", autoupdate="false" } 
+Number SonosKitchen_select			"Radio Station"         <note>			
+
+Dimmer SonosKitchenVolume			"Sonos Volume"			<speakervol>	(GF_Kitchen, Music)				{ sonos="[Kitchen:volume]" }
+String SonosKitchen_PlayUri 																				{ sonos="[Kitchen:playuri]"}
+Switch SonosKitchens_Save  																					{ sonos="[ON:Kitchen:save]", autoupdate="false" } 
+Switch SonosKitchen_Restore																					{ sonos="[ON:Kitchen:restore]", autoupdate="false" } 
+
+String SonosBedroom_track			"Bedroom: [%s]"  		<sonos3>		(Music)							{ sonos="[RINCON_B8E9373208C601400:currenttrack]", autoupdate="false"}
+Switch SonosBedroom					"Sonos Music" 			<note>			(FF_BedMaster, Music)			{ sonos="[ON:RINCON_B8E9373208C601400:play],[OFF:RINCON_B8E9373208C601400:stop]" }
+Dimmer SonosBedroomVolume			"Sonos Volume"			<speakervol>	(FF_BedMaster, Music)			{ sonos="[RINCON_B8E9373208C601400:volume]" }
+
+String SonosLounge_track			"Lounge: [%s]"  		<sonosconnect>	(Music)							{ sonos="[RINCON_B8E93792274001400:currenttrack]", autoupdate="false"}
+Switch SonosLounge					"Sonos Music" 			<note>			(GF_Living, Music)				{ sonos="[ON:RINCON_B8E93792274001400:play],[OFF:RINCON_B8E93792274001400:stop]" }
+Dimmer SonosLoungeVolume			"Sonos Volume"			<speakervol>	(GF_Living, Music)				{ sonos="[RINCON_B8E93792274001400:volume]" }
+String SonosLounge_PlayUri 																					{ sonos="[Lounge:playuri]"}
+
+// Doorbell
+//Switch Doorbell																								{ sonos="[ON:Kitchen:save],[OFF:Kitchen:restore]"}
+Switch Doorbell
+String LoungeLine																							{ sonos="[Lounge:playline]"} 
+String SonosAddKitchen																						{ sonos="[Kitchen:add]"}
+String SonosAddLounge																						{ sonos="[Lounge:add]"}
+String SonosRemKitchen																						{ sonos="[Kitchen:remove]"}
+
+Switch SonosKit_Save  																						{ sonos="[ON:Kitchen:save]" } 
+Switch SonosKit_Restore																						{ sonos="[ON:Kitchen:restore]" } 
+Switch SonosLounge_Save  																					{ sonos="[ON:Lounge:save]" } 
+Switch SonosLounge_Restore																					{ sonos="[ON:Lounge:restore]" } 
+/*
+Switch SonosKit_Save  																						{ sonos="[ON:Kitchen:save]", autoupdate="false" } 
+Switch SonosKit_Restore																						{ sonos="[ON:Kitchen:restore]", autoupdate="false" } 
+Switch SonosLounge_Save  																					{ sonos="[ON:Lounge:save]", autoupdate="false" } 
+Switch SonosLounge_Restore																					{ sonos="[ON:Lounge:restore]", autoupdate="false" } 
+ */
+ //Switch SonosLoungeSwitch (stateSwitches) {sonos="[ON:RINCON_B8E93792274001400:save],[OFF:RINCON_B8E93792274001400:restore]"}
+
+
+/* Media Players */
+Switch Media_Loungeroom				"Media Player Power"	<video>			(GF_Living)						{ xbmc=">[#loungeroom|System.Shutdown]", wol="10.0.26.63#A8:20:66:1E:4C:EC", nh="10.0.26.40" }
+//String Media_Loungeroom_Status		"Media Player Status [%s]"   			(GF_Living)						
+Switch Media_Bedroom				"Media Player Power"	<video>			(FF_BedMaster)					{ xbmc=">[#bedroom|System.Shutdown]", wol="10.0.26.63#EC:A8:6B:FE:46:93", nh="10.0.26.41" }
+//String Media_Bedroom_Status			"Media Player Status [%s]"   			(FF_BedMaster)					
+String Media_Bedroom_State			"State [%s]"															{ xbmc="<[#bedroom|Player.State]" }
+String Media_Bedroom_Title			"Title [%s]"															{ xbmc="<[#bedroom|Player.Title]" }
+String Media_Bedroom_Type			"Kodi Type [%s]"														{ xbmc="<[#bedroom|Player.Type]" }
+String Media_Bedroom_ShowTitle		"Show [%s]"																{ xbmc="<[#bedroom|Player.ShowTitle]" }
+Switch Media_Bedroom_PlayPause		"Play/Pause"															{ xbmc=">[#bedroom|Player.PlayPause]", autoupdate="false" }
+Switch Media_Bedroom_Stop			"Living Stop"															{ xbmc=">[#bedroom|Player.Stop]", autoupdate="false" }
+String Media_Bedroom_Notify			"Living Notify [%s]"													{ xbmc="<[#bedroom|GUI.ShowNotification]", autoupdate="false" }
+
+
+/* Modes */
+Number House_Select			
+String House_Mode			"Current mode: [%s]"
+
+/* Night Mode
+ * Away Mode
+ * Home Mode
+ * Holiday Mode
+ */
+
+/* Indoor Temperatures */
+Number Temperature_FF_Bed 			"Temperature [%.1f °C]"	<temperature>	(Temperature, FF_BedMaster)		{mqtt="<[mymosquitto:/Temperature/MasterBedroom:state:default]"}
+Number Humidity_FF_Bed 				"Humidity [%.1f %%]" 	<water>			(Temperature, FF_BedMaster)		{mqtt="<[mymosquitto:/Temperature/Humidity/MasterBedroom:state:default]"}
+Number Temperature_GF_Kit 			"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Kitchen)		{mqtt="<[mymosquitto:/Temperature/Kitchen:state:default]"}
+Number Humidity_GF_Kit 				"Humidity [%.1f %%]" 	<water>			(Temperature, GF_Kitchen)		{mqtt="<[mymosquitto:/Temperature/Humidity/Kitchen:state:default]"}
+
+/* NTP binding demo item */
+DateTime		Date				"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>							{ ntp="Oceania/Sydney:en_EN" }
+
+/* Locations */
+Location SiteLocation				"Bondi, Australia"
+
+Number   Weather_Temperature  		"Current Temperature [%.0f °C]"	<temperature>	(Temperature_Web)								{weather="locationId=home, type=temperature, property=current"}
+Number   Weather_Humidity     		"Humidity [%d %%]"		<water>			(Temperature_Web)								{weather="locationId=home, type=atmosphere, property=humidity"}
+Number   Weather_Temperature_Min  	"Min [%.1f °C]"   		<temperature> 	(Temperature_Web)							{weather="locationId=home, type=temperature, property=min"}
+Number   Weather_Temperature_Max	"Max [%.1f °C]"   						(Temperature_Web)								{weather="locationId=home, type=temperature, property=max"}
+Number   Weather_Wind_Speed		  	"Wind speed [%.0f]"   	<wind>			(Temperature_Web)								{weather="locationId=home, type=wind, property=speed"}
+String	Weather_Wind_Direction			"Wind Direction [%s]"					(Temperature_Web)								{weather="locationId=home, type=wind, property=direction"}
+String   Weather_Temperature_MinMax   "Today's Min/Max [%s °C]"   	<temperature>											{weather="locationId=home, forecast=0, type=temperature, property=minMax, scale=0"}
+
+/* String strSunset "Sunset" <clock> (gWeather) { http="<[http://api.wunderground.com/api/<api_code>/astronomy/q/NL/rijswijk.xml:21600000:XSLT(wunderground_sunset.xsl)]" }
+* Replace with your own API code (sign up for a developers account). Find a location near your home. The http refresh option can be set to once or twice a day.
+* https://github.com/openhab/openhab/wiki/Samples-Rules
+*/
+/* Weather 
+Group Weather_Chart													(Weather)
+Number Weather_Temperature 		"Outside Temperature [%.1f °C]"	<temperature> (Weather_Chart) { http="<[http://weather.yahooapis.com/forecastrss?w=22721166&u=c:60000:XSLT(yahoo_weather_temperature.xsl)]" }
+Number Weather_Humidity 		"Outside Humidity [%.1f %%]"	<temperature> (Weather) { http="<[http://weather.yahooapis.com/forecastrss?w=22721166&u=c:60000:XSLT(yahoo_weather_humidity.xsl)]" }
+Number Weather_Humidex			"Humidex [SCALE(humidex.scale):%s]" 			(Weather)
+Number Weather_Temp_Max 		"Todays Maximum [%.1f °C]"	<temperature> (Weather_Chart)
+Number Weather_Temp_Min 		"Todays Minimum [%.1f °C]"	<temperature> (Weather_Chart)
+Number Weather_Chart_Period		"Chart Period"
+DateTime Weather_LastUpdate		"Last Update [%1$ta %1$tR]"	<clock>
+*/

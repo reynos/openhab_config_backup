@@ -1,0 +1,312 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.* 
+import java.lang.Math 
+import org.openhab.core.library.types.DecimalType
+import java.util.Date
+import java.text.SimpleDateFormat
+
+var Timer timer = null
+var Timer DeckWaterTimer = null
+
+/* Sonos Radio Station */
+	
+rule "Select Sonos Radio Station"
+    when
+        Item SonosKitchen_select received command
+    then
+        switch (receivedCommand) 
+        {            
+            case 0 : sendCommand(SonosKitchen_Radio, "triplej" )      
+            case 1 : sendCommand(SonosKitchen_Radio, "702" )
+        }
+end
+
+rule "Front Light"
+	when
+		Item PresenceDarren_PhoneMqttHome received command
+	then
+		if (receivedCommand == ON) {
+			sendCommand(Light_Outdoor_Front_Porch, ON)
+			timer = createTimer(now.plusSeconds(300)) [|
+			sendCommand(Light_Outdoor_Front_Porch, OFF)
+			]
+			timer.cancel
+			timer = null
+		}
+		
+/*
+		switch (House_Select) 
+        {            
+            case 0 : {
+               			sendCommand(Light_Outdoor_Front_Porch, ON)
+						timer = createTimer(now.plusSeconds(300)) [|
+						sendCommand(Light_Outdoor_Front_Porch, OFF)
+						]
+						timer.cancel
+						timer = null
+						}
+            
+           case 1 : {
+               			sendCommand(Light_Outdoor_Front_Porch, ON)
+						timer = createTimer(now.plusSeconds(300)) [|
+						sendCommand(Light_Outdoor_Front_Porch, OFF)
+						]
+						timer.cancel
+						timer = null
+						}
+
+           case 2 : {
+               			sendCommand(Light_Outdoor_Front_Porch, ON)
+						sendCommand(Light_GF_Living_Hall, ON)
+						timer = createTimer(now.plusSeconds(300)) [|
+						sendCommand(Light_Outdoor_Front_Porch, OFF)
+						sendCommand(Light_GF_Living_Hall, OFF)
+						]
+						timer.cancel
+						timer = null
+						}
+
+        }
+  */
+    end
+
+
+/* 			if (House_Select == "0") {
+				timer = null
+				sendCommand(Light_Outdoor_Front_Porch, ON)
+				timer = createTimer(now.plusSeconds(300)) [|
+					sendCommand(Light_Outdoor_Front_Porch, OFF)
+				]
+			timer.cancel
+			timer = null
+			}
+			if (House_Select == "1") {
+				timer = null
+				sendCommand(Light_Outdoor_Front_Porch, ON)
+				timer = createTimer(now.plusSeconds(300)) [|
+					sendCommand(Light_Outdoor_Front_Porch, OFF)
+				]
+			timer.cancel
+			timer = null
+			}
+			if (House_Select == "2") {
+				timer = null
+				sendCommand(Light_Outdoor_Front_Porch, ON)
+				sendCommand(Light_GF_Living_Hall, ON)
+				timer = createTimer(now.plusSeconds(300)) [|
+					sendCommand(Light_Outdoor_Front_Porch, OFF)
+					sendCommand(Light_GF_Living_Hall, OFF)
+
+				]
+			timer.cancel
+			timer = null
+		)
+*/			
+
+
+
+rule "House Mode"
+	when
+		Item House_Select received command
+	then
+		switch (receivedCommand) 
+		{
+			case 0 : {
+						postUpdate(House_Mode, "Bedtime" )	
+						sendCommand(Lights, OFF)
+						timer = createTimer(now.plusSeconds(120)) [|
+							sendCommand(Light_FF_Hall_Stairs, OFF)
+						]
+//						timer.cancel
+						timer = null
+//						Thread::sleep(120000)
+						
+						} 
+			case 1 : {
+						postUpdate(House_Mode, "Night" )
+						sendCommand(AllLights, OFF)
+						} 
+			case 2 : {
+						postUpdate(House_Mode, "Evening" )	
+						sendCommand(Evening, ON)
+						}
+			case 3 : {
+						postUpdate(House_Mode, "Home" )	
+//						sendCommand(Light_GF_Kitchen_Bench, ON)
+//						sendCommand(SonosKitchen_Radio, "triplej" )      
+						}
+			case 4 : {
+						postUpdate(House_Mode, "Away" )	
+						sendCommand(AllLights, OFF)
+						}
+			case 5 : postUpdate(House_Mode, "Holiday" )	
+		}
+end
+
+rule "Deck Watering Timer"
+when
+	Item Water_Back_Deck received command
+then
+	if(receivedCommand==ON) {
+		if(timer==null) {
+			// first ON command, so create a timer to turn the light off again
+			timer = createTimer(now.plusSeconds(120)) [|
+				sendCommand(Water_Back_Deck, OFF)
+			]
+		} else {
+			// subsequent ON command, so reschedule the existing timer
+			timer.reschedule(now.plusSeconds(120))
+		}
+	} else if(receivedCommand==OFF) {
+		// remove any previously scheduled timer
+		if(timer!=null) {
+			timer.cancel
+			timer = null
+		}	
+	}
+end
+
+rule "Peanut Night Lights"
+when
+	Item gPeanut received command
+then
+	if(receivedCommand==ON) {
+		if(timer==null) {
+			// first ON command, so create a timer to turn the light off again
+			timer = createTimer(now.plusSeconds(300)) [|
+				sendCommand(gPeanut, OFF)
+			]
+		} else {
+			// subsequent ON command, so reschedule the existing timer
+			timer.reschedule(now.plusSeconds(300))
+		}
+	} else if(receivedCommand==OFF) {
+		// remove any previously scheduled timer
+		if(timer!=null) {
+			timer.cancel
+			timer = null
+		}	
+	}
+end
+
+//			sendCommand(Light_Outdoor_Backyard, ON)
+//			sendCommand(Light_GF_Kitchen_High, 40)
+//				sendCommand(Light_Outdoor_Backyard, OFF)
+//				sendCommand(Light_GF_Kitchen_High, OFF)
+
+
+//rule LightOn
+//	when
+// and when House_Select == 1
+//		Item GF_Kitchen_Light_level changed to "1"	
+//	then
+//		if (House_Select == "1")
+//			sendCommand(Light_GF_Kitchen_Bench, ON)
+//            var SimpleDateFormat df = new SimpleDateFormat( "YYYY-MM-dd HH:mm:ss" )
+//            var String Timestamp = df.format( new Date() )
+//            logInfo( "FILE", Timestamp )
+//		sendCommand("SonosKitchen_PlayUri" , "/x-rincon-mp3radio://10.0.26.20/sounds/doorball.mp3")
+//	end
+
+/*
+rule LightOff
+when
+	Item GF_Kitchen_Light_level changed to "0"	
+then
+	sendCommand(Light_GF_Kitchen_Bench, OFF)
+	sendCommand("SonosKitchen_PlayUri" , "/x-rincon-mp3radio://10.0.26.20/sounds/chime.mp3")
+end
+*/
+
+rule Doorbell
+when
+	Item Doorbell changed to ON
+then
+//	sendCommand("SonosLounge_PlayUri" , "x-rincon-mp3radio://10.0.26.20/sounds/doorbell.mp3")
+//	sendCommand("SonosLounge_Save", "ON")
+	sendCommand("SonosLounge_Save", "ON")
+	Thread::sleep(10000)
+	sendCommand("SonosKit_Save", "ON")
+	Thread::sleep(10000)
+	sendCommand("LoungeLine", "Lounge")
+//	sendCommand(SonosAddKitchen ,"Lounge")
+	sendCommand("SonosAddLounge" ,"Kitchen")
+	Thread::sleep(3000)
+	playSound("doorbell.mp3")
+	Thread::sleep(3000)
+	sendCommand("Doorbell", "OFF")
+	Thread::sleep(10000)
+	sendCommand("SonosLounge_Restore", "ON")
+//	Thread::sleep(10000)
+	sendCommand("SonosKit_Restore", "ON")
+	sendCommand("SonosKitchen" ,"ON")	
+end
+
+/*
+rule "Evening Kitchen light ON"
+when
+	Time cron "0 30 19 * * ?"
+then
+	sendCommand(Light_GF_Kitchen_Bench, ON)
+end
+*/
+
+
+/*
+ * This rule run in IFTTT
+ * 
+ * rule "Evening lights ON"
+when
+	Time cron "0 30 17 1/1 * ? *"
+then
+//	sendCommand(Light_GF_Kitchen_Bench, ON)
+	sendCommand(Light_GF_Living_Lamp, ON)
+	sendCommand(Light_Outdoor_Backyard, ON)
+	sendCommand(Light_Outdoor_Frontyard, ON)
+	sendCommand(Light_FF_Hall_Stairs, ON)
+//	sendCommand("SonosKitchen_PlayUri" , "/x-rincon-mp3radio://10.0.26.20/sounds/chime.mp3")
+end
+
+rule "Evening lights OFF"
+when
+	Time cron "0 30 22 * * ?"
+then
+	sendCommand(Light_GF_Living_Lamp, OFF)
+	sendCommand(Light_Outdoor_Backyard, OFF)
+	sendCommand(Light_Outdoor_Frontyard, OFF)
+	sendCommand(Light_FF_Hall_Stairs, OFF)
+	sendCommand(Light_GF_Kitchen_Bench, OFF)
+//	sendCommand("SonosKitchen_PlayUri" , "x-rincon-mp3radio://10.0.26.20/sounds/chime.mp3")
+end
+ */
+
+
+/*
+rule "TEST SONOS SOUND"
+when
+	Time cron "0 11 13 * * ?"
+then
+	sendCommand(SonosKitchens_Save, "ON")
+	sendCommand("SonosKitchen_PlayUri" , "x-rincon-mp3radio://10.0.26.20/sounds/chime.mp3")
+	sendCommand(SonosKitchen_Restore, "ON")
+	sendCommand(Light_GF_Kitchen_Bench, ON)
+end
+ */
+	
+/**
+
+	Time cron "0 30 22 * * ?"
+
+rule "Front Garden lights ON"
+when
+	Time cron "0 10 20 * * ?"
+then
+	sendCommand(plug1, ON)
+
+rule "Front Garden lights OFF"
+when
+	Time cron "0 00 23 * * ?"
+then
+	sendCommand(plug1, OFF)
+*/
