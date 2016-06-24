@@ -126,12 +126,14 @@ String Media_Bedroom_Notify			"Living Notify [%s]"													{ xbmc="<[#bedroo
 
 
 /* Modes */
-Number House_Select			
+Number House_Select			"Mode selected [%d]"
 String House_Mode			"Current mode: [%s]"
 
-/* Night Mode
- * Away Mode
+/* Bedtime Mode
+ * Night Mode
+ * Evening Mode
  * Home Mode
+ * Away Mode
  * Holiday Mode
  */
 
@@ -147,13 +149,13 @@ DateTime		Date				"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>							{ ntp="Ocea
 /* Locations */
 Location SiteLocation				"Bondi, Australia"
 
-Number   Weather_Temperature  		"Current Temperature [%.0f °C]"	<temperature>	(Temperature_Web)								{weather="locationId=home, type=temperature, property=current"}
-Number   Weather_Humidity     		"Humidity [%d %%]"		<water>			(Temperature_Web)								{weather="locationId=home, type=atmosphere, property=humidity"}
-Number   Weather_Temperature_Min  	"Min [%.1f °C]"   		<temperature> 	(Temperature_Web)							{weather="locationId=home, type=temperature, property=min"}
-Number   Weather_Temperature_Max	"Max [%.1f °C]"   						(Temperature_Web)								{weather="locationId=home, type=temperature, property=max"}
-Number   Weather_Wind_Speed		  	"Wind speed [%.0f]"   	<wind>			(Temperature_Web)								{weather="locationId=home, type=wind, property=speed"}
+Number	Weather_Temperature  		"Current Temperature [%.0f °C]"	<temperature>	(Temperature_Web)								{weather="locationId=home, type=temperature, property=current"}
+Number	Weather_Humidity     		"Humidity [%d %%]"		<water>			(Temperature_Web)								{weather="locationId=home, type=atmosphere, property=humidity"}
+Number	Weather_Temperature_Min  	"Min [%.1f °C]"   		<temperature> 	(Temperature_Web)							{weather="locationId=home, type=temperature, property=min"}
+Number	Weather_Temperature_Max	"Max [%.1f °C]"   						(Temperature_Web)								{weather="locationId=home, type=temperature, property=max"}
+Number	Weather_Wind_Speed		  	"Wind speed [%.0f]"   	<wind>			(Temperature_Web)								{weather="locationId=home, type=wind, property=speed"}
 String	Weather_Wind_Direction			"Wind Direction [%s]"					(Temperature_Web)								{weather="locationId=home, type=wind, property=direction"}
-String   Weather_Temperature_MinMax   "Today's Min/Max [%s °C]"   	<temperature>											{weather="locationId=home, forecast=0, type=temperature, property=minMax, scale=0"}
+String	Weather_Temperature_MinMax   "Today's Min/Max [%s °C]"   	<temperature>											{weather="locationId=home, forecast=0, type=temperature, property=minMax, scale=0"}
 
 /* String strSunset "Sunset" <clock> (gWeather) { http="<[http://api.wunderground.com/api/<api_code>/astronomy/q/NL/rijswijk.xml:21600000:XSLT(wunderground_sunset.xsl)]" }
 * Replace with your own API code (sign up for a developers account). Find a location near your home. The http refresh option can be set to once or twice a day.

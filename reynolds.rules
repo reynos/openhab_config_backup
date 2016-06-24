@@ -22,6 +22,16 @@ rule "Select Sonos Radio Station"
         }
 end
 
+//rule "Front Light"
+//	when
+//		Item PresenceDarren_PhoneMqttLB received command
+//	then
+//		if (receivedCommand == ON) {
+//			sendCommand(Light_GF_Living_Hall, ON) }
+//		else
+//			sendCommand(Light_GF_Living_Hall, OFF)
+//	end
+/*
 rule "Front Light"
 	when
 		Item PresenceDarren_PhoneMqttHome received command
@@ -34,7 +44,7 @@ rule "Front Light"
 			timer.cancel
 			timer = null
 		}
-		
+	end	
 /*
 		switch (House_Select) 
         {            
@@ -69,8 +79,8 @@ rule "Front Light"
 
         }
   */
-    end
-
+ 
+ 
 
 /* 			if (House_Select == "0") {
 				timer = null
