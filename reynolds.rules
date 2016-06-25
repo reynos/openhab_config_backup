@@ -22,15 +22,26 @@ rule "Select Sonos Radio Station"
         }
 end
 
-//rule "Front Light"
-//	when
-//		Item PresenceDarren_PhoneMqttLB received command
-//	then
-//		if (receivedCommand == ON) {
-//			sendCommand(Light_GF_Living_Hall, ON) }
-//		else
-//			sendCommand(Light_GF_Living_Hall, OFF)
-//	end
+rule "Front Light"
+	when
+		Item PresenceDarren_PhoneMqttLB received command
+	then
+		if (receivedCommand == ON)
+			sendCommand(Light_Outdoor_Front_Porch, ON)
+		else
+			sendCommand(Light_Outdoor_Front_Porch, OFF)
+	end
+
+/* rule "Kitchen Light"
+	when
+		Item PresenceDarren_PhoneMqttKit received command
+	then
+		if ((PresenceDarren_PhoneMqttKit.state) == ON)
+			sendCommand(Light_GF_Kitchen_Bench, ON)
+		else
+			sendCommand(Light_GF_Kitchen_Bench, OFF)
+	end
+*/
 /*
 rule "Front Light"
 	when
