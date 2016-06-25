@@ -5,9 +5,10 @@ import java.lang.Math
 import org.openhab.core.library.types.DecimalType
 import java.util.Date
 import java.text.SimpleDateFormat
+//import java.lang.Integer.*
 
 var Timer timer = null
-var Timer DeckWaterTimer = null
+// var Timer DeckWaterTimer = null
 
 /* Sonos Radio Station */
 	
@@ -22,19 +23,21 @@ rule "Select Sonos Radio Station"
         }
 end
 
-rule "Front Light"
+
+rule "Coming home front Light"
 	when
 		Item PresenceDarrenHome received command
 	then
-		if (receivedCommand == ON) {
+		if (receivedCommand == ON && House_Select.state < 3) {
 			sendCommand(Light_Outdoor_Front_Porch, ON)
 			timer = createTimer(now.plusSeconds(300)) [|
 			sendCommand(Light_Outdoor_Front_Porch, OFF)
 			]
 			timer.cancel
 			timer = null
-		}
-
+		} else { }
+		postUpdate(House_Select, 3)
+end
 
 rule "Presence Lights ON"
 	when
@@ -55,10 +58,9 @@ rule "Presence Lights ON"
             
             case "Letterbox" : {
  								logInfo("PresenceCheck", "Darren is at the Letterbox")
- //       						sendCommand(Light_Outdoor_Front_Porch, ON)
 								}
 		}
- end
+ 		end
  
  rule "Presence Lights OFF"
 	when
