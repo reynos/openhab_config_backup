@@ -24,13 +24,76 @@ end
 
 rule "Front Light"
 	when
-		Item PresenceDarren_PhoneMqttLB received command
+		Item PresenceDarrenHome received command
 	then
-		if (receivedCommand == ON)
+		if (receivedCommand == ON) {
 			sendCommand(Light_Outdoor_Front_Porch, ON)
-		else
+			timer = createTimer(now.plusSeconds(300)) [|
 			sendCommand(Light_Outdoor_Front_Porch, OFF)
-	end
+			]
+			timer.cancel
+			timer = null
+		}
+
+
+rule "Presence Lights ON"
+	when
+		Item DarrenAction changed from leave to enter
+	then
+		switch (DarrenLocation.state) 
+        {            
+            case "Kitchen" : {
+               					logInfo("PresenceCheck", "Darren is in the Kitchen")
+        						sendCommand(Light_GF_Kitchen_Low, 60)
+        						sendCommand(Light_GF_Kitchen_Bench, ON)
+								}
+            
+            case "Bedroom" : {
+               					logInfo("PresenceCheck", "Darren is in the Bedroom")
+        						sendCommand(Light_FF_BedMaster_Ceiling, 60)
+								}
+            
+            case "Letterbox" : {
+ 								logInfo("PresenceCheck", "Darren is at the Letterbox")
+ //       						sendCommand(Light_Outdoor_Front_Porch, ON)
+								}
+		}
+ end
+ 
+ rule "Presence Lights OFF"
+	when
+		Item DarrenAction changed from enter to leave
+	then
+		switch (DarrenLocation.state) 
+        {            
+            case "Kitchen" : {
+        						sendCommand(Light_GF_Kitchen_Low, OFF)
+        						sendCommand(Light_GF_Kitchen_Bench, OFF)
+								}
+            
+            case "Bedroom" : {
+        						sendCommand(Light_FF_BedMaster_Ceiling, OFF)
+								}
+            
+            case "Letterbox" : {
+        						sendCommand(Light_Outdoor_Front_Porch, OFF)
+//								}
+		}
+ end  
+ 
+/* WORKING!!!
+rule "Letterbox"
+	when
+        Item DarrenAction changed from leave to enter
+	then
+        if(DarrenLocation.state == "Kitchen") {
+        logInfo("PresenceCheck", "Darren is in the Kitchen")
+        sendCommand(Light_GF_Kitchen_Low, 60)
+        }
+ 	    else {
+        }
+end
+*/
 
 /* rule "Kitchen Light"
 	when
@@ -43,18 +106,6 @@ rule "Front Light"
 	end
 */
 /*
-rule "Front Light"
-	when
-		Item PresenceDarren_PhoneMqttHome received command
-	then
-		if (receivedCommand == ON) {
-			sendCommand(Light_Outdoor_Front_Porch, ON)
-			timer = createTimer(now.plusSeconds(300)) [|
-			sendCommand(Light_Outdoor_Front_Porch, OFF)
-			]
-			timer.cancel
-			timer = null
-		}
 	end	
 /*
 		switch (House_Select) 
