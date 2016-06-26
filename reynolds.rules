@@ -24,6 +24,7 @@ rule "Select Sonos Radio Station"
 end
 
 
+/*
 rule "Coming home front Light"
 	when
 		Item PresenceDarrenHome received command
@@ -38,29 +39,52 @@ rule "Coming home front Light"
 		} else { }
 		postUpdate(House_Select, 3)
 end
+*/
 
 rule "Presence Lights ON"
 	when
 		Item DarrenAction changed from leave to enter
 	then
-		switch (DarrenLocation.state) 
-        {            
-            case "Kitchen" : {
-               					logInfo("PresenceCheck", "Darren is in the Kitchen")
-        						sendCommand(Light_GF_Kitchen_Low, 60)
-        						sendCommand(Light_GF_Kitchen_Bench, ON)
+		if (House_Select.state < 3) {
+			switch (DarrenLocation.state) {            
+            	case "Letterbox" : {
+ 								logInfo("PresenceCheck", "Darren is at the Letterbox")
+        						sendCommand(Light_Outdoor_Front_Porch, ON)
 								}
-            
-            case "Bedroom" : {
+            	case "Kitchen" : {
+               					logInfo("PresenceCheck", "Darren is in the Kitchen")
+ 	     						sendCommand(Light_GF_Kitchen_Bench, ON)
+ 								if (Light_GF_Kitchen_Low.state > 0) {}
+ 								else {
+		       						sendCommand(Light_GF_Kitchen_Low, 60) 
+		       						}
+		       					}
+            	case "Bedroom"  : {
                					logInfo("PresenceCheck", "Darren is in the Bedroom")
         						sendCommand(Light_FF_BedMaster_Ceiling, 60)
 								}
-            
-            case "Letterbox" : {
+				}
+			}
+		else {
+			switch (DarrenLocation.state) {            
+            	case "Letterbox" : {
  								logInfo("PresenceCheck", "Darren is at the Letterbox")
+//        						sendCommand(Light_Outdoor_Front_Porch, ON)
 								}
-		}
- 		end
+            	case "Kitchen" : {
+               					logInfo("PresenceCheck", "Darren is in the Kitchen")
+ //       						sendCommand(Light_GF_Kitchen_Low, 60)
+ //     						sendCommand(Light_GF_Kitchen_Bench, ON)
+								}
+            
+            	case "Bedroom" : {
+               					logInfo("PresenceCheck", "Darren is in the Bedroom")
+//        						sendCommand(Light_FF_BedMaster_Ceiling, 60)
+								}
+            
+				}
+			}
+ end
  
  rule "Presence Lights OFF"
 	when
@@ -69,17 +93,17 @@ rule "Presence Lights ON"
 		switch (DarrenLocation.state) 
         {            
             case "Kitchen" : {
-        						sendCommand(Light_GF_Kitchen_Low, OFF)
-        						sendCommand(Light_GF_Kitchen_Bench, OFF)
+//        						sendCommand(Light_GF_Kitchen_Low, OFF)
+ //       						sendCommand(Light_GF_Kitchen_Bench, OFF)
 								}
             
             case "Bedroom" : {
-        						sendCommand(Light_FF_BedMaster_Ceiling, OFF)
+//        						sendCommand(Light_FF_BedMaster_Ceiling, OFF)
 								}
             
             case "Letterbox" : {
         						sendCommand(Light_Outdoor_Front_Porch, OFF)
-//								}
+								}
 		}
  end  
  
@@ -194,8 +218,6 @@ rule "House Mode"
 						]
 //						timer.cancel
 						timer = null
-//						Thread::sleep(120000)
-						
 						} 
 			case 1 : {
 						postUpdate(House_Mode, "Night" )
@@ -206,15 +228,15 @@ rule "House Mode"
 						sendCommand(Evening, ON)
 						}
 			case 3 : {
+						postUpdate(House_Mode, "Away" )	
+						sendCommand(AllLights, OFF)
+						}
+			case 4 : 	postUpdate(House_Mode, "Holiday" )	
+			case 5 : {
 						postUpdate(House_Mode, "Home" )	
 //						sendCommand(Light_GF_Kitchen_Bench, ON)
 //						sendCommand(SonosKitchen_Radio, "triplej" )      
 						}
-			case 4 : {
-						postUpdate(House_Mode, "Away" )	
-						sendCommand(AllLights, OFF)
-						}
-			case 5 : postUpdate(House_Mode, "Holiday" )	
 		}
 end
 
