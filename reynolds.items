@@ -37,7 +37,7 @@ Dimmer Light_GF_Living_TV 			"TV" 					<slider>		(GF_Living, Lights)							{ zwa
 Number Light_GF_Living_TV_W			"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="16:command=METER,meter_scale=E_W" }
 Dimmer Light_GF_Living_Lounge 		"Lounge" 								(GF_Living, Lights)							{ zwave="14:command=SWITCH_MULTILEVEL" }
 Number Light_GF_Living_Lounge_W		"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="14:command=METER,meter_scale=E_W" }
-Dimmer Light_GF_Living_Lamp 		"Lamp" 					<slider>		(GF_Living, Lights)							{ zwave="7:command=SWITCH_MULTILEVEL" }
+Dimmer Light_GF_Living_Lamp 		"Lamp" 					<slider>		(GF_Living, Lights, Evening)							{ zwave="7:command=SWITCH_MULTILEVEL" }
 Switch Light_GF_Living_Hall 		"Hall" 									(GF_Living, Lights)							{ zwave="15:command=SWITCH_BINARY" }
 Number Light_GF_Living_Hall_W		"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="15:command=METER,meter_scale=E_W" }
 Dimmer Light_GF_Front_Bedroom 		"Front Bedroom" 		<slider>		(GF_Bedrooms, AllLights)					{ zwave="20:command=SWITCH_MULTILEVEL" }

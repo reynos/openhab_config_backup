@@ -23,7 +23,6 @@ rule "Select Sonos Radio Station"
         }
 end
 
-
 /*
 rule "Coming home front Light"
 	when
@@ -56,12 +55,12 @@ rule "Presence Lights ON"
  	     						sendCommand(Light_GF_Kitchen_Bench, ON)
  								if (Light_GF_Kitchen_Low.state > 0) {}
  								else {
-		       						sendCommand(Light_GF_Kitchen_Low, 60) 
+		       						sendCommand(Light_GF_Kitchen_Low, 40) 
 		       						}
 		       					}
             	case "Bedroom"  : {
                					logInfo("PresenceCheck", "Darren is in the Bedroom")
-        						sendCommand(Light_FF_BedMaster_Ceiling, 60)
+        						sendCommand(Light_FF_BedMaster_Ceiling, 40)
 								}
 				}
 			}
@@ -69,17 +68,13 @@ rule "Presence Lights ON"
 			switch (DarrenLocation.state) {            
             	case "Letterbox" : {
  								logInfo("PresenceCheck", "Darren is at the Letterbox")
-//        						sendCommand(Light_Outdoor_Front_Porch, ON)
 								}
             	case "Kitchen" : {
                					logInfo("PresenceCheck", "Darren is in the Kitchen")
- //       						sendCommand(Light_GF_Kitchen_Low, 60)
- //     						sendCommand(Light_GF_Kitchen_Bench, ON)
-								}
+ 								}
             
             	case "Bedroom" : {
                					logInfo("PresenceCheck", "Darren is in the Bedroom")
-//        						sendCommand(Light_FF_BedMaster_Ceiling, 60)
 								}
             
 				}
