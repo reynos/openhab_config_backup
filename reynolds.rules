@@ -35,10 +35,14 @@ then
 	 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
 	 				 }
 	 	case "pause" : {
-	 		   		sendCommand(Light_FF_BedMaster_Ceiling, 40)
+	 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
 	 	}
 	 	case "stop"  : {
-	 		   		sendCommand(Light_FF_BedMaster_Ceiling, 40)
+		 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
+						timer = createTimer(now.plusSeconds(60)) [|
+		 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
+					]
+						timer = null
 	 	}
  	}
 end
