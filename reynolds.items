@@ -113,17 +113,24 @@ Switch SonosLounge_Restore																					{ sonos="[ON:Lounge:restore]", au
 
 
 /* Media Players */
-Switch Media_Loungeroom				"Media Player Power"	<video>			(GF_Living)						{ xbmc=">[#loungeroom|System.Shutdown]", wol="10.0.26.63#A8:20:66:1E:4C:EC", nh="10.0.26.40" }
+Switch Media_Loungeroom					"Media Player Power"	<video>			(GF_Living)						{ xbmc=">[#loungeroom|System.Shutdown]", wol="10.0.26.63#A8:20:66:1E:4C:EC", nh="10.0.26.40" }
+String Media_Loungeroom_State			"State [%s]"															{ xbmc="<[#loungeroom|Player.State]" }
+String Media_Loungeroom_Title			"Title [%s]"															{ xbmc="<[#loungeroom|Player.Title]" }
+String Media_Loungeroom_Type			"Kodi Type [%s]"														{ xbmc="<[#loungeroom|Player.Type]" }
+String Media_Loungeroom_ShowTitle		"Show [%s]"																{ xbmc="<[#loungeroom|Player.ShowTitle]" }
+Switch Media_Loungeroom_PlayPause		"Play/Pause"															{ xbmc=">[#loungeroom|Player.PlayPause]", autoupdate="false" }
+Switch Loungeroom_Stop					"Living Stop"															{ xbmc=">[#loungeroom|Player.Stop]", autoupdate="false" }
+String Loungeroom_Notify				"Living Notify [%s]"													{ xbmc="<[#loungeroom|GUI.ShowNotification]", autoupdate="false" }
 //String Media_Loungeroom_Status		"Media Player Status [%s]"   			(GF_Living)						
-Switch Media_Bedroom				"Media Player Power"	<video>			(FF_BedMaster)					{ xbmc=">[#bedroom|System.Shutdown]", wol="10.0.26.63#EC:A8:6B:FE:46:93", nh="10.0.26.41" }
+Switch Media_Bedroom					"Media Player Power"	<video>			(FF_BedMaster)					{ xbmc=">[#bedroom|System.Shutdown]", wol="10.0.26.63#EC:A8:6B:FE:46:93", nh="10.0.26.41" }
 //String Media_Bedroom_Status			"Media Player Status [%s]"   			(FF_BedMaster)					
-String Media_Bedroom_State			"State [%s]"															{ xbmc="<[#bedroom|Player.State]" }
-String Media_Bedroom_Title			"Title [%s]"															{ xbmc="<[#bedroom|Player.Title]" }
-String Media_Bedroom_Type			"Kodi Type [%s]"														{ xbmc="<[#bedroom|Player.Type]" }
-String Media_Bedroom_ShowTitle		"Show [%s]"																{ xbmc="<[#bedroom|Player.ShowTitle]" }
-Switch Media_Bedroom_PlayPause		"Play/Pause"															{ xbmc=">[#bedroom|Player.PlayPause]", autoupdate="false" }
-Switch Media_Bedroom_Stop			"Living Stop"															{ xbmc=">[#bedroom|Player.Stop]", autoupdate="false" }
-String Media_Bedroom_Notify			"Living Notify [%s]"													{ xbmc="<[#bedroom|GUI.ShowNotification]", autoupdate="false" }
+String Media_Bedroom_State				"State [%s]"															{ xbmc="<[#bedroom|Player.State]" }
+String Media_Bedroom_Title				"Title [%s]"															{ xbmc="<[#bedroom|Player.Title]" }
+String Media_Bedroom_Type				"Kodi Type [%s]"														{ xbmc="<[#bedroom|Player.Type]" }
+String Media_Bedroom_ShowTitle			"Show [%s]"																{ xbmc="<[#bedroom|Player.ShowTitle]" }
+Switch Media_Bedroom_PlayPause			"Play/Pause"															{ xbmc=">[#bedroom|Player.PlayPause]", autoupdate="false" }
+Switch Media_Bedroom_Stop				"Living Stop"															{ xbmc=">[#bedroom|Player.Stop]", autoupdate="false" }
+String Media_Bedroom_Notify				"Living Notify [%s]"													{ xbmc="<[#bedroom|GUI.ShowNotification]", autoupdate="false" }
 
 
 /* Modes */
