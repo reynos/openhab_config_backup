@@ -110,7 +110,7 @@ rule "Presence Lights ON"
 		       					}
             	case "Bedroom"  : {
                					logInfo("PresenceCheck", "Darren is in the Bedroom")
-        						sendCommand(Light_FF_BedMaster_Ceiling, 40)
+//        						sendCommand(Light_FF_BedMaster_Ceiling, 40)
 								}
 				}
 			}
@@ -265,23 +265,23 @@ rule "House Mode"
 						timer = null
 						} 
 			case 1 : {
-						postUpdate(House_Mode, "Night" )
-						sendCommand(AllLights, OFF)
-						} 
-			case 2 : {
 						postUpdate(House_Mode, "Evening" )	
 						sendCommand(Evening, ON)
 						}
-			case 3 : {
-						postUpdate(House_Mode, "Away" )	
+			case 2 : {
+						postUpdate(House_Mode, "Night" )
 						sendCommand(AllLights, OFF)
-						}
-			case 4 : 	postUpdate(House_Mode, "Holiday" )	
-			case 5 : {
+						} 
+			case 3 : {
 						postUpdate(House_Mode, "Home" )	
 //						sendCommand(Light_GF_Kitchen_Bench, ON)
 //						sendCommand(SonosKitchen_Radio, "triplej" )      
 						}
+			case 4 : {
+						postUpdate(House_Mode, "Away" )	
+						sendCommand(AllLights, OFF)
+						}
+			case 5 : 	postUpdate(House_Mode, "Holiday" )	
 		}
 end
 
