@@ -256,6 +256,7 @@ rule "House Mode"
 		switch (receivedCommand) 
 		{
 			case 0 : {
+						sendCommand(Light_FF_Hall_Stairs, ON)
 						postUpdate(House_Mode, "Bedtime" )	
 						sendCommand(Lights, OFF)
 						timer = createTimer(now.plusSeconds(120)) [|
