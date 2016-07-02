@@ -10,6 +10,22 @@ import java.text.SimpleDateFormat
 var Timer timer = null
 // var Timer DeckWaterTimer = null
 
+rule Kit_Light_State
+	when Item GF_Kitchen_Light_level received command	
+	then
+		var SimpleDateFormat df = new SimpleDateFormat( "YYYY-MM-dd HH:mm:ss" )
+		var String Timestamp = df.format( new Date() )
+		logInfo( "Lightstate", Timestamp )
+        switch (receivedCommand) 
+        {            
+            case 0 :	logInfo("PresenceCheck", "Darren is at the Letterbox")
+            case 1 : 	logInfo("PresenceCheck", "Darren is at the Letterbox")
+
+        }
+end
+
+
+
 /* Sonos Radio Station */
 	
 rule "Select Sonos Radio Station"
@@ -39,7 +55,7 @@ then
 	 	}
 	 	case "stop"  : {
 		 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
-						timer = createTimer(now.plusSeconds(60)) [|
+						timer = createTimer(now.plusSeconds(70)) [|
 		 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
 					]
 						timer = null
@@ -166,18 +182,6 @@ rule "Letterbox"
 end
 */
 
-/* rule "Kitchen Light"
-	when
-		Item PresenceDarren_PhoneMqttKit received command
-	then
-		if ((PresenceDarren_PhoneMqttKit.state) == ON)
-			sendCommand(Light_GF_Kitchen_Bench, ON)
-		else
-			sendCommand(Light_GF_Kitchen_Bench, OFF)
-	end
-*/
-/*
-	end	
 /*
 		switch (House_Select) 
         {            
