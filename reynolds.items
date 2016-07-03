@@ -26,10 +26,11 @@ Group FF_Hall						"Hallway" 				<stairs> 		(gFF)
 Group FF_Study						"Study" 				<sofa>	 		(gFF)
 Group Lights																(AllLights)
 Group Peanut
-Group  gPresence
+Group gPresence
 
 /* Light Sensor */
 Number GF_Kitchen_Light_level		"Light Reading: [%s]"					(GF_Kitchen)								{ mqtt="<[mymosquitto:/Light/Kitchen:state:default]" }
+Switch Night
 
 /* Lights */
 //Dimmer Light_GF_Living_TV 			"TV [%.1fW]" 					<slider>		(GF_Living, Lights)							{ zwave="16:command=SWITCH_MULTILEVEL;METER,meter_scale=E_W" }
