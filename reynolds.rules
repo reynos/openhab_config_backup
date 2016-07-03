@@ -251,7 +251,54 @@ end
 		)
 */			
 
+rule "TimeOfDay"
+	when
+		Item TimeOfDay received command   // from IFTTT
+	then
+		switch (receivedCommand) 
+		{
+			case 0 : { // Day
+						if (House_Select.state == 4)  { }
+						else sendCommand(House_Select, 3 )	
+						} 
+			case 1 : { // Evening
+						if (House_Select.state == 4)  {
+							sendCommand(Light_Outdoor_Frontyard, ON)
+							}
+						else sendCommand(House_Select, 1 )	
+						}
+			case 2 : { // Night
+						if (House_Select.state == 4)  {
+							sendCommand(Light_Outdoor_Frontyard, OFF)
+							}
+						else sendCommand(House_Select, 2 )	
+						}
+			}
+end
 
+/*
+rule "Night switch"
+	when
+		Item Night changed from OFF to ON  // from IFTTT
+	then
+		if (House_Select.state == 4) 
+			sendCommand(Light_Outdoor_Frontyard, OFF)
+		else {
+			sendCommand(House_Select, 2 )	
+			}
+end
+
+rule "Day switch"
+	when
+		Item Night changed from ON to OFF  // from IFTTT
+	then
+		if (House_Select.state == 4) { }
+		else
+			sendCommand(House_Select, 3 )	
+
+	}
+end
+*/
 
 rule "House Mode"
 	when
@@ -271,22 +318,16 @@ rule "House Mode"
 						} 
 			case 1 : {
 						postUpdate(House_Mode, "Evening" )	
-						sendCommand(Evening, ON)
+						sendCommand(gEvening, ON)
 						}
 			case 2 : {
 						postUpdate(House_Mode, "Night" )
 						sendCommand(AllLights, OFF)
 						} 
 			case 3 : {
-						postUpdate(House_Mode, "Home" )	
-//						sendCommand(Light_GF_Kitchen_Bench, ON)
-//						sendCommand(SonosKitchen_Radio, "triplej" )      
+						postUpdate(House_Mode, "Day" )	
 						}
-			case 4 : {
-						postUpdate(House_Mode, "Away" )	
-						sendCommand(AllLights, OFF)
-						}
-			case 5 : 	postUpdate(House_Mode, "Holiday" )	
+			case 4 : 	postUpdate(House_Mode, "Holiday" )	
 		}
 end
 
