@@ -1,10 +1,10 @@
-// Switch  PresenceDarren_PhoneMqttHome "Darren @ Home" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:home" }
+Switch  PresenceDarren_PhoneMqttHome "Darren @ Home" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:home" }
 Switch  PresenceDarren_PhoneMqttLB "Darren @ LB" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Letterbox"}
 Switch  PresenceDarren_PhoneMqttKit "Darren @ Kitchen" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Kitchen" }
 Switch  PresenceDarren_PhoneMqttBed "Darren @ Bed" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Bedroom" }
 Switch  PresenceDarren_PhoneMqttWork "Darren @ Work" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:DarrenWork" }
 
-Switch PresenceDarrenHome "Darren @ Home" (gPresence)
+//Switch PresenceDarrenHome "Darren @ Home" (gPresence)
 
 String DarrenLocation  {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.desc)]"}
 String DarrenAction {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.event)]"}

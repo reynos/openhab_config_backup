@@ -89,12 +89,12 @@ then
 end
 
 
-/*
 rule "Coming home front Light"
 	when
-		Item PresenceDarrenHome received command
+		Item PresenceDarren_PhoneMqttHome received command
 	then
-		if (receivedCommand == ON && House_Select.state < 3) {
+		if (PresenceDarren_PhoneMqttHome.state == ON && House_Select.state < 3) {
+//		if (receivedCommand == ON && House_Select.state < 3) {
 			sendCommand(Light_Outdoor_Front_Porch, ON)
 			timer = createTimer(now.plusSeconds(300)) [|
 			sendCommand(Light_Outdoor_Front_Porch, OFF)
@@ -104,7 +104,6 @@ rule "Coming home front Light"
 		} else { }
 		postUpdate(House_Select, 3)
 end
-*/
 
 rule "Presence Lights ON"
 	when
@@ -113,19 +112,19 @@ rule "Presence Lights ON"
 		if (House_Select.state < 3) {
 			switch (DarrenLocation.state) {            
             	case "Letterbox" : {
- 								logInfo("PresenceCheck", "Darren is at the Letterbox")
-        						sendCommand(Light_Outdoor_Front_Porch, ON)
+// 								logInfo("PresenceCheck", "Darren is at the Letterbox")
+//        						sendCommand(Light_Outdoor_Front_Porch, ON)
 								}
             	case "Kitchen" : {
                					logInfo("PresenceCheck", "Darren is in the Kitchen")
- 	     						sendCommand(Light_GF_Kitchen_Bench, ON)
+/* 	     						sendCommand(Light_GF_Kitchen_Bench, ON)
  								if (Light_GF_Kitchen_Low.state > 0) {}
  								else {
 		       						sendCommand(Light_GF_Kitchen_Low, 40) 
-		       						}
+		       						}  */
 		       					}
             	case "Bedroom"  : {
-               					logInfo("PresenceCheck", "Darren is in the Bedroom")
+//               					logInfo("PresenceCheck", "Darren is in the Bedroom")
 //        						sendCommand(Light_FF_BedMaster_Ceiling, 40)
 								}
 				}
@@ -133,14 +132,14 @@ rule "Presence Lights ON"
 		else {
 			switch (DarrenLocation.state) {            
             	case "Letterbox" : {
- 								logInfo("PresenceCheck", "Darren is at the Letterbox")
+// 								logInfo("PresenceCheck", "Darren is at the Letterbox")
 								}
             	case "Kitchen" : {
-               					logInfo("PresenceCheck", "Darren is in the Kitchen")
+//               					logInfo("PresenceCheck", "Darren is in the Kitchen")
  								}
             
             	case "Bedroom" : {
-               					logInfo("PresenceCheck", "Darren is in the Bedroom")
+//               					logInfo("PresenceCheck", "Darren is in the Bedroom")
 								}
             
 				}
@@ -163,7 +162,7 @@ rule "Presence Lights ON"
 								}
             
             case "Letterbox" : {
-        						sendCommand(Light_Outdoor_Front_Porch, OFF)
+//        						sendCommand(Light_Outdoor_Front_Porch, OFF)
 								}
 		}
  end  
