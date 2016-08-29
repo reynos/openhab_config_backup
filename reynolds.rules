@@ -20,10 +20,8 @@ rule Kit_Light_State
         {            
             case 0 :	logInfo("PresenceCheck", "Darren is at the Letterbox")
             case 1 : 	logInfo("PresenceCheck", "Darren is at the Letterbox")
-
         }
 end
-
 
 
 /* Sonos Radio Station */
@@ -79,16 +77,30 @@ then
 	 		   		
 	 				 }
 	 	case "pause" : {
-	 		   		sendCommand(Light_GF_Living_TV, 40)
+	 		   		sendCommand(Light_GF_Living_TV, 20)
 	 	}
 	 	case "stop"  : {
-	 		   		sendCommand(Light_GF_Living_TV, 40)
-	 		   		sendCommand(Light_GF_Living_Lounge, 40)
+	 		   		sendCommand(Light_GF_Living_TV, 20)
+//	 		   		sendCommand(Light_GF_Living_Lounge, 40)
 	 	}
  	}
 end
 
+rule "Darren Home"
+	when
+        Item PresenceDarren changed from OFF to ON
+	then
+ //       if(House_Select.state < 3) {
+			sendCommand(Light_Outdoor_Front_Porch, ON)
+			timer = createTimer(now.plusSeconds(300)) [|
+			sendCommand(Light_Outdoor_Front_Porch, OFF)
+			]
+			timer.cancel
+			timer = null
+//			} else { }
+end
 
+/*
 rule "Coming home front Light"
 	when
 		Item PresenceDarren_PhoneMqttHome received command
@@ -121,7 +133,7 @@ rule "Presence Lights ON"
  								if (Light_GF_Kitchen_Low.state > 0) {}
  								else {
 		       						sendCommand(Light_GF_Kitchen_Low, 40) 
-		       						}  */
+		       						}  
 		       					}
             	case "Bedroom"  : {
 //               					logInfo("PresenceCheck", "Darren is in the Bedroom")
@@ -166,6 +178,7 @@ rule "Presence Lights ON"
 								}
 		}
  end  
+ */
  
 /* WORKING!!!
 rule "Letterbox"
