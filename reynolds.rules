@@ -11,7 +11,7 @@ var Timer timer = null
 var Timer timerporch = null
 // var Timer DeckWaterTimer = null
 
-rule Kit_Light_State
+/* rule Kit_Light_State
 	when Item GF_Kitchen_Light_level received command	
 	then
 		var SimpleDateFormat df = new SimpleDateFormat( "YYYY-MM-dd HH:mm:ss" )
@@ -23,6 +23,7 @@ rule Kit_Light_State
             case 1 : 	logInfo("PresenceCheck", "Darren is at the Letterbox")
         }
 end
+*/
 
 /* Sonos Radio Station */
 	
@@ -133,7 +134,7 @@ rule "TimeOfDay"
 						}
 			case 2 : { // Night
 						if (House_Select.state == 4)  {
-							sendCommand(Light_Outdoor_Frontyard, OFF)
+							sendCommand(AllLights, OFF)
 							}
 						else sendCommand(House_Select, 2 )	
 						}
@@ -162,7 +163,7 @@ rule "House Mode"
 						}
 			case 2 : {
 						postUpdate(House_Mode, "Night" )
-						sendCommand(AllLights, OFF)
+						sendCommand(Lights, OFF)
 						} 
 			case 3 : {
 						postUpdate(House_Mode, "Day" )	
