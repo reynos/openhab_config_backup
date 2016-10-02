@@ -24,7 +24,6 @@ rule Kit_Light_State
         }
 end
 
-
 /* Sonos Radio Station */
 	
 rule "Select Sonos Radio Station"
@@ -113,6 +112,134 @@ then
 		}	
 	}
 end
+
+
+rule "TimeOfDay"
+	when
+		Item TimeOfDay received command   // from IFTTT
+	then
+		switch (receivedCommand) 
+		{
+			case 0 : { // Day
+						if (House_Select.state == 4)  { }
+						else sendCommand(House_Select, 3 )	
+						} 
+			case 1 : { // Evening
+						if (House_Select.state == 4)  {
+							sendCommand(Light_Outdoor_Frontyard, ON)
+							}
+						else sendCommand(House_Select, 1 )	
+						}
+			case 2 : { // Night
+						if (House_Select.state == 4)  {
+							sendCommand(Light_Outdoor_Frontyard, OFF)
+							}
+						else sendCommand(House_Select, 2 )	
+						}
+			}
+end
+
+rule "House Mode"
+	when
+		Item House_Select received command
+	then
+		switch (receivedCommand) 
+		{
+			case 0 : {
+						sendCommand(Light_FF_Hall_Stairs, ON)
+						postUpdate(House_Mode, "Bedtime" )	
+						sendCommand(Lights, OFF)
+						timer = createTimer(now.plusSeconds(120)) [|
+							sendCommand(Light_FF_Hall_Stairs, OFF)
+						]
+//						timer.cancel
+						timer = null
+						} 
+			case 1 : {
+						postUpdate(House_Mode, "Evening" )	
+						sendCommand(gEvening, ON)
+						}
+			case 2 : {
+						postUpdate(House_Mode, "Night" )
+						sendCommand(AllLights, OFF)
+						} 
+			case 3 : {
+						postUpdate(House_Mode, "Day" )	
+						}
+			case 4 : 	postUpdate(House_Mode, "Holiday" )	
+		}
+end
+
+rule "Deck Watering Timer"
+when
+	Item Water_Back_Deck received command
+then
+	if(receivedCommand==ON) {
+		if(timer==null) {
+			// first ON command, so create a timer to turn the light off again
+			timer = createTimer(now.plusSeconds(120)) [|
+				sendCommand(Water_Back_Deck, OFF)
+			]
+		} else {
+			// subsequent ON command, so reschedule the existing timer
+			timer.reschedule(now.plusSeconds(120))
+		}
+	} else if(receivedCommand==OFF) {
+		// remove any previously scheduled timer
+		if(timer!=null) {
+			timer.cancel
+			timer = null
+		}	
+	}
+end
+
+rule "Peanut Night Lights"
+when
+	Item Peanut received command
+then
+	if(receivedCommand==ON) {
+		if(timer==null) {
+			// first ON command, so create a timer to turn the light off again
+			timer = createTimer(now.plusSeconds(300)) [|
+				sendCommand(Peanut, OFF)
+			]
+		} else {
+			// subsequent ON command, so reschedule the existing timer
+			timer.reschedule(now.plusSeconds(300))
+		}
+	} else if(receivedCommand==OFF) {
+		// remove any previously scheduled timer
+		if(timer!=null) {
+			timer.cancel
+			timer = null
+		}	
+	}
+end
+
+rule Doorbell
+when
+	Item Doorbell changed to ON
+then
+//	sendCommand("SonosLounge_PlayUri" , "x-rincon-mp3radio://10.0.26.20/sounds/doorbell.mp3")
+//	sendCommand("SonosLounge_Save", "ON")
+	sendCommand("SonosLounge_Save", "ON")
+	Thread::sleep(10000)
+	sendCommand("SonosKit_Save", "ON")
+	Thread::sleep(10000)
+	sendCommand("LoungeLine", "Lounge")
+//	sendCommand(SonosAddKitchen ,"Lounge")
+	sendCommand("SonosAddLounge" ,"Kitchen")
+	Thread::sleep(3000)
+	playSound("doorbell.mp3")
+	Thread::sleep(3000)
+	sendCommand("Doorbell", "OFF")
+	Thread::sleep(10000)
+	sendCommand("SonosLounge_Restore", "ON")
+//	Thread::sleep(10000)
+	sendCommand("SonosKit_Restore", "ON")
+	sendCommand("SonosKitchen" ,"ON")	
+end
+
 
 /* 
 rule "Darren Home"
@@ -332,32 +459,6 @@ end
 			timer = null
 		)
 */			
-
-rule "TimeOfDay"
-	when
-		Item TimeOfDay received command   // from IFTTT
-	then
-		switch (receivedCommand) 
-		{
-			case 0 : { // Day
-						if (House_Select.state == 4)  { }
-						else sendCommand(House_Select, 3 )	
-						} 
-			case 1 : { // Evening
-						if (House_Select.state == 4)  {
-							sendCommand(Light_Outdoor_Frontyard, ON)
-							}
-						else sendCommand(House_Select, 1 )	
-						}
-			case 2 : { // Night
-						if (House_Select.state == 4)  {
-							sendCommand(Light_Outdoor_Frontyard, OFF)
-							}
-						else sendCommand(House_Select, 2 )	
-						}
-			}
-end
-
 /*
 rule "Night switch"
 	when
@@ -381,83 +482,6 @@ rule "Day switch"
 	}
 end
 */
-
-rule "House Mode"
-	when
-		Item House_Select received command
-	then
-		switch (receivedCommand) 
-		{
-			case 0 : {
-						sendCommand(Light_FF_Hall_Stairs, ON)
-						postUpdate(House_Mode, "Bedtime" )	
-						sendCommand(Lights, OFF)
-						timer = createTimer(now.plusSeconds(120)) [|
-							sendCommand(Light_FF_Hall_Stairs, OFF)
-						]
-//						timer.cancel
-						timer = null
-						} 
-			case 1 : {
-						postUpdate(House_Mode, "Evening" )	
-						sendCommand(gEvening, ON)
-						}
-			case 2 : {
-						postUpdate(House_Mode, "Night" )
-						sendCommand(AllLights, OFF)
-						} 
-			case 3 : {
-						postUpdate(House_Mode, "Day" )	
-						}
-			case 4 : 	postUpdate(House_Mode, "Holiday" )	
-		}
-end
-
-rule "Deck Watering Timer"
-when
-	Item Water_Back_Deck received command
-then
-	if(receivedCommand==ON) {
-		if(timer==null) {
-			// first ON command, so create a timer to turn the light off again
-			timer = createTimer(now.plusSeconds(120)) [|
-				sendCommand(Water_Back_Deck, OFF)
-			]
-		} else {
-			// subsequent ON command, so reschedule the existing timer
-			timer.reschedule(now.plusSeconds(120))
-		}
-	} else if(receivedCommand==OFF) {
-		// remove any previously scheduled timer
-		if(timer!=null) {
-			timer.cancel
-			timer = null
-		}	
-	}
-end
-
-rule "Peanut Night Lights"
-when
-	Item Peanut received command
-then
-	if(receivedCommand==ON) {
-		if(timer==null) {
-			// first ON command, so create a timer to turn the light off again
-			timer = createTimer(now.plusSeconds(300)) [|
-				sendCommand(Peanut, OFF)
-			]
-		} else {
-			// subsequent ON command, so reschedule the existing timer
-			timer.reschedule(now.plusSeconds(300))
-		}
-	} else if(receivedCommand==OFF) {
-		// remove any previously scheduled timer
-		if(timer!=null) {
-			timer.cancel
-			timer = null
-		}	
-	}
-end
 
 //			sendCommand(Light_Outdoor_Backyard, ON)
 //			sendCommand(Light_GF_Kitchen_High, 40)
@@ -488,30 +512,6 @@ then
 end
 */
 
-rule Doorbell
-when
-	Item Doorbell changed to ON
-then
-//	sendCommand("SonosLounge_PlayUri" , "x-rincon-mp3radio://10.0.26.20/sounds/doorbell.mp3")
-//	sendCommand("SonosLounge_Save", "ON")
-	sendCommand("SonosLounge_Save", "ON")
-	Thread::sleep(10000)
-	sendCommand("SonosKit_Save", "ON")
-	Thread::sleep(10000)
-	sendCommand("LoungeLine", "Lounge")
-//	sendCommand(SonosAddKitchen ,"Lounge")
-	sendCommand("SonosAddLounge" ,"Kitchen")
-	Thread::sleep(3000)
-	playSound("doorbell.mp3")
-	Thread::sleep(3000)
-	sendCommand("Doorbell", "OFF")
-	Thread::sleep(10000)
-	sendCommand("SonosLounge_Restore", "ON")
-//	Thread::sleep(10000)
-	sendCommand("SonosKit_Restore", "ON")
-	sendCommand("SonosKitchen" ,"ON")	
-end
-
 /*
 rule "Evening Kitchen light ON"
 when
@@ -520,7 +520,6 @@ then
 	sendCommand(Light_GF_Kitchen_Bench, ON)
 end
 */
-
 
 /*
  * This rule run in IFTTT
