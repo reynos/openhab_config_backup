@@ -99,6 +99,7 @@ then
 				timerporch = createTimer(now.plusSeconds(180)) [|
 					sendCommand(PresenceDarren, OFF)
 				]
+				timerporch = null
 			} else {
 			// subsequent ON command, so reschedule the existing timer
 			timerporch.reschedule(now.plusSeconds(180))
