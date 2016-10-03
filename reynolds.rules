@@ -42,48 +42,49 @@ rule "Adjust Bedroom lighting when Kodi starts/stops"
 when
     Item Media_Bedroom_State changed
 then
-    var String state = Media_Bedroom_State.state.toString()
-    
-    logInfo("XBMC State:", state.toString)
-    switch (state.lowerCase) {
-	 	case "play" :  {
-	 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
-	 				 }
-	 	case "pause" : {
-	 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
-	 	}
-	 	case "stop"  : {
-		 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
-						timer = createTimer(now.plusSeconds(70)) [|
+	if(House_Select.state < 3) {
+	    var String state = Media_Bedroom_State.state.toString()    
+	    logInfo("XBMC State:", state.toString)
+	    switch (state.lowerCase) {
+		 	case "play" :  {
 		 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
-					]
-						timer = null
-	 	}
- 	}
+		 				 }
+		 	case "pause" : {
+		 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
+		 	}
+		 	case "stop"  : {
+			 		   		sendCommand(Light_FF_BedMaster_Ceiling, 20)
+							timer = createTimer(now.plusSeconds(70)) [|
+			 		   		sendCommand(Light_FF_BedMaster_Ceiling, OFF)
+						]
+							timer = null
+		 	}
+		}
+	}
 end
 
 rule "Adjust Lounge lighting when Kodi starts/stops"
 when
     Item Media_Loungeroom_State changed
 then
-    var String stateL = Media_Loungeroom_State.state.toString()
-    
-    logInfo("Lounge Kodi State:", stateL.toString)
-    switch (stateL.lowerCase) {
-	 	case "play" :  {
-	 		   		sendCommand(Light_GF_Living_Lounge, OFF)
-	 		   		sendCommand(Light_GF_Living_TV, OFF)
-	 		   		sendCommand(Light_GF_Kitchen_High, OFF)
-	 		   		sendCommand(Light_GF_Kitchen_Low, OFF)
-	 		   		
-	 				 }
-	 	case "pause" : {
-	 		   		sendCommand(Light_GF_Living_TV, 20)
-	 	}
-	 	case "stop"  : {
-	 		   		sendCommand(Light_GF_Living_TV, 20)
+	if(House_Select.state < 3) {
+	    var String stateL = Media_Loungeroom_State.state.toString()
+        logInfo("Lounge Kodi State:", stateL.toString)
+	    switch (stateL.lowerCase) {
+		 	case "play" :  {
+		 		   		sendCommand(Light_GF_Living_Lounge, OFF)
+		 		   		sendCommand(Light_GF_Living_TV, OFF)
+		 		   		sendCommand(Light_GF_Kitchen_High, OFF)
+		 		   		sendCommand(Light_GF_Kitchen_Low, OFF)	 		   		
+		 				 }
+		 	case "pause" : {
+		 		   		sendCommand(Light_GF_Living_TV, 40)
+		 	}
+		 	case "stop"  : {
+		 		   		sendCommand(Light_GF_Living_TV, 40)
 //	 		   		sendCommand(Light_GF_Living_Lounge, 40)
-	 	}
+		 	}
+		}
  	}
 end
 
