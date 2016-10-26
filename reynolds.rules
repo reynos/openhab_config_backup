@@ -123,10 +123,6 @@ rule "TimeOfDay"
 	then
 		switch (receivedCommand) 
 		{
-			case 0 : { // Day
-						if (House_Select.state == 4)  { }
-						else sendCommand(House_Select, 3 )	
-						} 
 			case 1 : { // Evening
 						if (House_Select.state == 4)  {
 							sendCommand(Light_Outdoor_Frontyard, ON)
@@ -139,6 +135,12 @@ rule "TimeOfDay"
 							}
 						else sendCommand(House_Select, 2 )	
 						}
+			case 3 : { // Day
+						if (House_Select.state == 4)  { 
+							sendCommand(AllLights, OFF)
+						}
+						else sendCommand(House_Select, 3 )	
+						} 
 			}
 end
 
