@@ -199,6 +199,21 @@ then
 	}
 end
 
+rule "Xmas Santa ON rule"
+when
+	Time cron "0 0 17 1/1 * ? *"
+then
+	sendCommand(Light_Outdoor_Frontyard, ON)
+end
+
+rule "Xmas Santat OFF rule"
+when
+	Time cron "0 0 21 1/1 * ? *"
+then
+	sendCommand(Light_Outdoor_Frontyard, OFF)
+end
+
+
 rule "Peanut Night Lights"
 when
 	Item Peanut received command
