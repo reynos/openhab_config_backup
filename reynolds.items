@@ -14,6 +14,7 @@ Group Status 		(All)
 Group Temperature	(All)
 Group Temperature_Web
 Group Music			(All)
+Group gXmas
 Group gEvening
 //Group Bedtime		(Evening)
 Group GF_Living 					"Living Room" 			<television> 	(gGF)
@@ -44,7 +45,7 @@ Switch Light_GF_Living_Hall 		"Hall" 									(GF_Living, Lights)							{ zwave=
 Number Light_GF_Living_Hall_W		"Energy Usage: [%.1fW]" <energy>		(GF_Living)									{ zwave="15:command=METER,meter_scale=E_W" }
 Dimmer Light_GF_Front_Bedroom 		"Front Bedroom" 		<slider>		(GF_Bedrooms, AllLights)					{ zwave="20:command=SWITCH_MULTILEVEL" }
 Number Light_GF_Front_Bedroom_W		"Energy Usage: [%.1fW]" <energy>		(GF_Bedrooms)								{ zwave="20:command=METER,meter_scale=E_W" }
-Dimmer Light_GF_Middle_Bedroom 		"Middle Bedroom" 		<slider>		(GF_Bedrooms, Lights, gEvening)				{ zwave="2:command=SWITCH_MULTILEVEL" }
+Dimmer Light_GF_Middle_Bedroom 		"Middle Bedroom" 		<slider>		(GF_Bedrooms, gXmas, Lights, gEvening)				{ zwave="2:command=SWITCH_MULTILEVEL" }
 Number Light_GF_Middle_Bedroom_W	"Energy Usage: [%.1fW]" <energy>		(GF_Bedrooms)								{ zwave="2:command=METER,meter_scale=E_W" }
 Dimmer Light_GF_Kitchen_High 		"High [%d %%]" 			<slider>		(GF_Kitchen, Lights)						{ zwave="12:command=SWITCH_MULTILEVEL" }
 Number Light_GF_Kitchen_High_W		"Energy Usage: [%.1fW]" <energy>		(GF_Kitchen)								{ zwave="12:command=METER,meter_scale=E_W" }
@@ -66,7 +67,7 @@ Switch Light_Outdoor_Front_Porch 	"Front Porch"							(Outdoor, Lights)							{ 
 Number Light_Outdoor_Front_Porch_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="17:command=METER,meter_scale=E_W" }
 Switch Light_Outdoor_Frontyard 		"Front Garden Lights" 					(Outdoor, Lights, gEvening)					{ zwave="5:command=SWITCH_BINARY" }
 Number Light_Outdoor_Frontyard_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="5:command=METER,meter_scale=E_W" }
-Switch Light_Outdoor_Christmas 		"Christmas lights" 						(Outdoor, Lights, gEvening)					{ zwave="19:command=SWITCH_BINARY" }
+Switch Light_Outdoor_Christmas 		"Christmas lights" 						(Outdoor, gXmas, Lights, gEvening)					{ zwave="19:command=SWITCH_BINARY" }
 Number Light_Outdoor_Christmas_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="19:command=METER,meter_scale=E_W" }
 Switch Light_Outdoor_Backyard 		"Back Garden"							(Outdoor, Lights, gEvening, Peanut)			{ zwave="4:command=SWITCH_BINARY" }
 Switch Water_Back_Deck				"Water Deck" 							(Outdoor, Watering)							{ mqtt=">[mymosquitto:/water/one:command:ON:1],>[mymosquitto:/water/one:command:OFF:0]"}

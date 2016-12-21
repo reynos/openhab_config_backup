@@ -199,18 +199,33 @@ then
 	}
 end
 
-rule "Xmas Santa ON rule"
+rule "Evening Lights ON "
+when
+	Time cron "0 0 20 1/1 * ? *"
+then
+	sendCommand(House_Select, 1 )
+end
+
+
+rule "Xmas Santa ON"
 when
 	Time cron "0 0 17 1/1 * ? *"
 then
 	sendCommand(Light_Outdoor_Frontyard, ON)
 end
 
-rule "Xmas Santat OFF rule"
+rule "Xmas Santa OFF"
 when
 	Time cron "0 0 21 1/1 * ? *"
 then
 	sendCommand(Light_Outdoor_Frontyard, OFF)
+end
+
+rule "Xmas Lights ON"
+when
+	Time cron "0 0 19 1/1 * ? *"
+then
+	sendCommand(gXmas, ON)
 end
 
 
