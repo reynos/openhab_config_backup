@@ -199,13 +199,13 @@ then
 	}
 end
 
-rule "Evening Lights ON "
+/* rule "Evening Lights ON "
 when
 	Time cron "0 0 20 1/1 * ? *"
 then
 	sendCommand(House_Select, 1 )
 end
-
+*/
 
 rule "Peanut Night Lights"
 when

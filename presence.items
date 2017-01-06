@@ -5,7 +5,7 @@ Switch  PresenceDarren_PhoneMqttBed "Darren @ Bed" (gPresence)  { mqttitude="mym
 Switch  PresenceDarren_PhoneMqttWork "Darren @ Work" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:DarrenWork" }
 Switch	PresenceDarren
 
-//Switch PresenceDarrenHome "Darren @ Home" (gPresence)
+Switch PresenceDarrenHome "Darren @ Home" (gPresence)
 
 String DarrenLocation  {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.desc)]"}
 String DarrenAction {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.event)]"}
