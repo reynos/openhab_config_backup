@@ -61,7 +61,7 @@ Switch Light_GF_Relay4		 		"Relay 4"								(GF_Kitchen, Lights)						{ mqtt=">[
 
 Dimmer Light_FF_BedMaster_Ceiling 	"Ceiling [%d %%]"		<slider>		(FF_BedMaster, AllLights)					{ zwave="18:command=SWITCH_MULTILEVEL" }
 Number Light_FF_BedMaster_Ceiling_W	"Energy Usage: [%.1fW]" <energy>		(FF_BedMaster)								{ zwave="18:command=METER,meter_scale=E_W" }
-Switch Light_FF_Hall_Stairs	 		"Stairs"								(FF_Hall, AllLights, gEvening, Peanut)		{ zwave="11:command=SWITCH_BINARY" }
+Switch Light_FF_Hall_Stairs	 		"Stairs"								(FF_Hall, Lights, gEvening, Peanut)			{ zwave="11:command=SWITCH_BINARY" }
 Number Light_FF_Hall_Stairs_W		"Energy Usage: [%.1fW]" <energy>		(FF_Hall)									{ zwave="11:command=METER,meter_scale=E_W" }
 Switch Light_Outdoor_Front_Porch 	"Front Porch"							(Outdoor, Lights)							{ zwave="17:command=SWITCH_BINARY" }
 Number Light_Outdoor_Front_Porch_W	"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="17:command=METER,meter_scale=E_W" }

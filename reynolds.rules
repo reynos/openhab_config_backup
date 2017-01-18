@@ -131,8 +131,8 @@ rule "TimeOfDay"
 						}
 			case 2 : { // Night
 						if (House_Select.state == 4)  {
-							sendCommand(AllLights, OFF)
-							sendCommand(Light_FF_Hall_Stairs, OFF)
+							sendCommand(Lights, OFF)
+/*							sendCommand(Light_FF_Hall_Stairs, OFF) */
 							}
 						else sendCommand(House_Select, 2 )	
 						}
