@@ -198,6 +198,18 @@ then
 	}
 end
 
+
+rule "Toggle front Porch Light"
+	when
+		Item PresenceDarren_PhoneMqttLB received command
+	then
+		if (Light_Outdoor_Front_Porch.state == ON) {
+			sendCommand(Light_Outdoor_Front_Porch, OFF)
+		} else { 
+			sendCommand(Light_Outdoor_Front_Porch, ON)
+		}
+end
+
 /* rule "Evening Lights ON "
 when
 	Time cron "0 0 20 1/1 * ? *"
