@@ -77,7 +77,8 @@ Switch Light_GF_Relay4		 		"Relay 4"								(GF_Kitchen)								{ mqtt=">[mymosq
 //Number Light_Outdoor_Backyard_W		"Energy Usage: [%.1fW]" <energy>		(Outdoor)									{ zwave="4:command=METER,meter_scale=E_W" }
 
 /* Music */
-String SonosKitchen_track			"Kitchen: [%s]"  		<sonos5>		(Music)							{ sonos="[Kitchen:currenttrack]", autoupdate="false"}
+/*
+ * String SonosKitchen_track			"Kitchen: [%s]"  		<sonos5>		(Music)							{ sonos="[Kitchen:currenttrack]", autoupdate="false"}
 Switch SonosKitchen					"Sonos Music" 			<note>			(GF_Kitchen, Music)				{ sonos="[ON:Kitchen:play],[OFF:Kitchen:stop]" }
 String SonosKitchen_Radio																					{ sonos="[ON:Kitchen:radio]", autoupdate="false" } 
 Number SonosKitchen_select			"Radio Station"         <note>			
@@ -95,20 +96,23 @@ String SonosLounge_track			"Lounge: [%s]"  		<sonosconnect>	(Music)							{ sono
 Switch SonosLounge					"Sonos Music" 			<note>			(GF_Living, Music)				{ sonos="[ON:RINCON_B8E93792274001400:play],[OFF:RINCON_B8E93792274001400:stop]" }
 Dimmer SonosLoungeVolume			"Sonos Volume"			<speakervol>	(GF_Living, Music)				{ sonos="[RINCON_B8E93792274001400:volume]" }
 String SonosLounge_PlayUri 																					{ sonos="[Lounge:playuri]"}
+*/
 
 // Doorbell
 //Switch Doorbell																								{ sonos="[ON:Kitchen:save],[OFF:Kitchen:restore]"}
-Switch Doorbell
+/*
+ * Switch Doorbell
 String LoungeLine																							{ sonos="[Lounge:playline]"} 
 String SonosAddKitchen																						{ sonos="[Kitchen:add]"}
 String SonosAddLounge																						{ sonos="[Lounge:add]"}
 String SonosRemKitchen																						{ sonos="[Kitchen:remove]"}
 
+
 Switch SonosKit_Save  																						{ sonos="[ON:Kitchen:save]" } 
 Switch SonosKit_Restore																						{ sonos="[ON:Kitchen:restore]" } 
 Switch SonosLounge_Save  																					{ sonos="[ON:Lounge:save]" } 
 Switch SonosLounge_Restore																					{ sonos="[ON:Lounge:restore]" } 
-/*
+
 Switch SonosKit_Save  																						{ sonos="[ON:Kitchen:save]", autoupdate="false" } 
 Switch SonosKit_Restore																						{ sonos="[ON:Kitchen:restore]", autoupdate="false" } 
 Switch SonosLounge_Save  																					{ sonos="[ON:Lounge:save]", autoupdate="false" } 

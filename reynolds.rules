@@ -115,6 +115,30 @@ then
 	}
 end
 
+rule "Beacon Front Porch Light control"
+	when
+		Item PresenceDarren_PhoneMqttFD changed to ON
+	then
+		if(House_Select.state < 3)
+			if (Light_Outdoor_Front_Porch.state == ON) {
+//				sendCommand(Light_Outdoor_Front_Porch, OFF)
+			} else { 
+				sendCommand(Light_Outdoor_Front_Porch, ON)
+				if(timerporch==null) {
+					timerporch = createTimer(now.plusSeconds(180)) [|
+						sendCommand(Light_Outdoor_Front_Porch, OFF)
+					]
+					timerporch = null
+//			} else {
+			// subsequent ON command, so reschedule the existing timer
+//			timerporch.reschedule(now.plusSeconds(180))
+				}			
+			}
+
+end
+
+
+
 
 rule "TimeOfDay"
 	when
@@ -198,17 +222,6 @@ then
 	}
 end
 
-
-rule "Toggle front Porch Light"
-	when
-		Item PresenceDarren_PhoneMqttLB received command
-	then
-		if (Light_Outdoor_Front_Porch.state == ON) {
-			sendCommand(Light_Outdoor_Front_Porch, OFF)
-		} else { 
-			sendCommand(Light_Outdoor_Front_Porch, ON)
-		}
-end
 
 /* rule "Evening Lights ON "
 when

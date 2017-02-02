@@ -1,13 +1,13 @@
 Switch  PresenceDarren_PhoneMqttHome "Darren @ Home" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:home" }
-Switch  PresenceDarren_PhoneMqttLB "Darren LB (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Letterbox"}
-Switch  PresenceDarren_PhoneMqttKit "Darren Kit (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Kitchen" }
-Switch  PresenceDarren_PhoneMqttBed "Darren Bed (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Bedroom" }
+Switch  PresenceDarren_PhoneMqttFD "Darren Front Door (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Front Door"}
+Switch  PresenceDarren_PhoneMqttKit "Darren Kitchen (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Kitchen" }
+Switch  PresenceDarren_PhoneMqttBed "Darren Master Bedroom (Beacon)" (gPresence)  { mqttitude="mymosquitto:owntracks/reynolds/darren/event:Bedroom" }
 Switch  PresenceDarren_PhoneMqttWork "Darren Work (OT)" (gPresence) { mqttitude="mymosquitto:owntracks/reynolds/darren/event:DarrenWork" }
 Switch	PresenceDarren "Darren Home (IFTTT)" (gPresence)
 
 Switch PresenceDarrenHome "Darren Home (OT)" (gPresence)
 
-String DarrenLocation  {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.desc)]"}
+String DarrenLocation "Beacon" {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.desc)]"}
 String DarrenAction {mqtt="<[mymosquitto:owntracks/reynolds/darren/event:state:JSONPATH($.event)]"}
 
 
